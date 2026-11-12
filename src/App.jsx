@@ -16,15 +16,25 @@ export default function App() {
   useLayoutEffect(() => {
     if (!("IntersectionObserver" in window)) return;
     const els = [...document.querySelectorAll("main .card, main h2, main .sub, main .hero > *, main figure, main details")];
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add("in");
-        io.unobserve(e.target);
-        setTimeout(() => { e.target.style.transitionDelay = ""; }, 900);
+    let revealEnabled = false;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+          setTimeout(() => { entry.target.style.transitionDelay = ""; }, 900);
+        }
+      });
+      if (!revealEnabled && entries.some((entry) => entry.isIntersecting)) {
+        document.documentElement.classList.add("reveal-ready");
+        revealEnabled = true;
       }
-    }), { threshold: 0.12 });
+    }, { threshold: 0.12 });
     els.forEach((el, i) => { el.classList.add("rv"); el.style.transitionDelay = (i % 6) * 70 + "ms"; io.observe(el); });
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      document.documentElement.classList.remove("reveal-ready");
+    };
   }, [pathname]);
   return (
     <>

@@ -62,7 +62,7 @@ body{background:transparent}
 .bg3d{position:fixed;inset:0;z-index:-1;pointer-events:none}.bg3d canvas{display:block}
 .card{background:rgba(13,19,38,.85)}
 @media(min-width:701px){.card{background:rgba(13,19,38,.68);backdrop-filter:blur(8px)}}
-.rv{opacity:0;transform:translateY(26px)}.rv.in{opacity:1;transform:none}
+.rv{opacity:1;transform:none}.reveal-ready .rv:not(.in){opacity:0;transform:translateY(26px)}.rv.in{opacity:1;transform:none}
 .rv,.card,.btn{transition:opacity .6s ease,transform .5s ease,box-shadow .3s,border-color .3s}
 .card:hover{transform:translateY(-4px);border-color:#2a4fd6;box-shadow:0 12px 40px rgba(37,99,255,.25)}
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,255,.45)}
